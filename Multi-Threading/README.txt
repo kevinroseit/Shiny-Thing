@@ -15,24 +15,29 @@ I have not yet measured the difference between this parallel thread program and 
 Though It would be cool to see the speed and performance differences.
 
 
----Problems:
+---Problems (Dates and Time lines available on Git!):
 
-**Importance = 10** Can't figure out this 'returns 3' problem.
+**ImportanceLevel = 10** Can't figure out this 'returns 3' problem.
 Researched some of it and found maybe it's because I don't catch any of the exceptions that try_lock throws?
 
----Get working:
+---Todo (Dates and Time lines available on Git!):
 
-**Importance = 5** Next I would like to get passing objects to threads. 
+**ImportanceLevel = 5** Next I would like to get passing objects to threads. 
 I have not researched this at all.
 
-**Importance = 3** I don't like global variable just hanging around. 
+**ImportanceLevel = 3** I don't like global variables just hanging around. 
 I would like to keep everythign neat and organized in headers and in main etc.
 This is more of like an up keep to make sure lazy code and bad code does not stick around.
 
-**Importance = 2** Start work on some better documentation, not just for this program but for the game as well.
+**ImportanceLevel = 6** Reminds me, what is Ian upto? See if he would like to help out.
+I also may have some one else helping, his name is Joe. 
+I believe he will be helping more on the game side though.
+
+
+**ImportanceLevel = 1** Start work on some better documentation, not just for this program but for the game as well.
 Maybe come up with a .pdf, examples and ooh pretty pictures, (making this stuff easier and friendlier to deal with, pretty much).
-Reminds me, what is Ian upto? See if he would like to help out.
-Also maybe put some of this stuff up on the git site?
+
+
 
 ---Other:
 
