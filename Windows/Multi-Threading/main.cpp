@@ -10,7 +10,7 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
-#include <exception>
+//#include <exception>
 //I will not use namespaces, I do not preffer to use namespaces.
 
 std::mutex iLock,jLock;
@@ -194,7 +194,7 @@ int main(int argC, char *argV[]){
     }catch (bool x){
         std::cout << "inputThread.joinable returned" << x << std::endl;
         if(x){
-            std::terminate();// this might be terminating main thread... not the thread I want
+            //std::terminate();// this might be terminating main thread... not the thread I want
             //~inputThread;
         }
     }
@@ -203,7 +203,7 @@ int main(int argC, char *argV[]){
         throw stepThread.joinable();
     }catch (bool x){
         if(x){
-            std::terminate();// this might be terminating main thread... not the thread I want
+            //std::terminate();// this might be terminating main thread... not the thread I want
             //~stepThread;
         }
     }
