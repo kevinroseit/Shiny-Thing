@@ -72,6 +72,7 @@ void inputLoop(){
         //}
         */
     }
+    //std::terminate();//apparently this terminates the whole program...
 
 }
 
@@ -125,6 +126,7 @@ void stepLoop(){
             }
         }*/
     }
+    //std::terminate();//apparently this termiantes the whole program...
 }
 
 //int drawLoop(){
@@ -189,9 +191,9 @@ int main(int argC, char *argV[]){
 
     try{
         throw inputThread.joinable();
-    }catch (int x){
+    }catch (bool x){
         std::cout << "inputThread.joinable returned" << x << std::endl;
-        if(x==1){
+        if(x){
             std::terminate();// this might be terminating main thread... not the thread I want
             //~inputThread;
         }
@@ -199,8 +201,8 @@ int main(int argC, char *argV[]){
 
     try{
         throw stepThread.joinable();
-    }catch (int x){
-        if(x==1){
+    }catch (bool x){
+        if(x){
             std::terminate();// this might be terminating main thread... not the thread I want
             //~stepThread;
         }
