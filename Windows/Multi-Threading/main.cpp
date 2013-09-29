@@ -10,7 +10,7 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
-//#include <exception>
+#include <exception>
 //I will not use namespaces, I do not preffer to use namespaces.
 
 std::mutex iLock,jLock;
@@ -29,7 +29,7 @@ void inputLoop(){
         }catch (int x){//handle exception
             switch (x){
             case -1:
-               if(i < 97){
+               if(i < 997){
                     i+=3;
                     std::cout << "i = " << i << "    inputLoop+3" << std::endl;//locks on cout ensure a clean command line prompt, else cout prints all over the place
                     iLock.unlock();//unlock when ever you're done with stuff that can only be safely accessed by things one at a time
@@ -39,17 +39,12 @@ void inputLoop(){
                     iLock.unlock();
                     jLock.unlock();
                }
-            /*case 0:
-               if(i < 97){
-                    i+=3;
-                    std::cout << "i = " << i << "    inputLoop+3" << std::endl;//locks on cout ensure a clean command line prompt, else cout prints all over the place
-                    iLock.unlock();//unlock when ever you're done with stuff that can only be safely accessed by things one at a time
-                    jLock.unlock();
-               }else{
-                    alive = false;//end loop and consequently the thread
-                    iLock.unlock();
-                    jLock.unlock();
-               }*/
+            case 0://iLock failed
+
+               break;
+            case 1://jLock failed
+
+                break;
             default:
                 break;
             }
@@ -86,7 +81,7 @@ void stepLoop(){
         }catch (int x){
             switch (x){
             case -1:
-               if(i < 100){
+               if(i < 1000){
                     i++;
                     std::cout << "i = " << i <<  "    stepLoop+1" << std::endl;
                     iLock.unlock();
@@ -96,17 +91,12 @@ void stepLoop(){
                     iLock.unlock();
                     jLock.unlock();
                }
-            /*case 0:
-               if(i < 100){
-                    i++;
-                    std::cout << "i = " << i <<  "    stepLoop+1" << std::endl;
-                    iLock.unlock();
-                    jLock.unlock();
-               }else{
-                    alive = false;
-                    iLock.unlock();
-                    jLock.unlock();
-               }*/
+            case 0://iLock failed
+
+               break;
+            case 1://jLock fialed
+
+                break;
             default:
                 break;
             }
@@ -136,7 +126,7 @@ void stepLoop(){
 int main(int argC, char *argV[]){
 
 
-    //i=0;
+    i=0;
 
     std::thread inputThread(inputLoop);
     std::thread stepThread(stepLoop);
@@ -150,7 +140,7 @@ int main(int argC, char *argV[]){
         }catch (int x){
             switch (x){
             case -1:
-               if(i > 99){
+               if(i > 999){
                     std::cout << "Don't worry it's actually counting ----------------" << std::endl;
                     iLock.unlock();
                     jLock.unlock();
@@ -159,16 +149,12 @@ int main(int argC, char *argV[]){
                     iLock.unlock();
                     jLock.unlock();
                }
-            /*case 0:
-               if(i > 99){
-                    std::cout << "Don't worry it's actually counting ----------------" << std::endl;
-                    iLock.unlock();
-                    jLock.unlock();
-                    alive = false;
-               }else{
-                    iLock.unlock();
-                    jLock.unlock();
-               }*/
+            case 0:
+
+               break;
+            case 1:
+
+                break;
             default:
                 break;
             }
@@ -189,25 +175,34 @@ int main(int argC, char *argV[]){
         }*/
     }
 
-    try{
+    try{//sync and close theads
         throw inputThread.joinable();
     }catch (bool x){
         std::cout << "inputThread.joinable returned" << x << std::endl;
         if(x){
+            std::cout << "Still alive" << std::endl;
+            inputThread.join();
             //std::terminate();// this might be terminating main thread... not the thread I want
-            //~inputThread;
+            //std::thread ~inputThread;
+        }else{
+            exit(1000);
         }
     }
 
-    try{
+    try{//sync and close threads
         throw stepThread.joinable();
     }catch (bool x){
         if(x){
+            stepThread.join();
             //std::terminate();// this might be terminating main thread... not the thread I want
-            //~stepThread;
+            //std::thread ~stepThread;
+        }else{
+            exit(1000);
         }
     }
     //for(int y = 0; y < 200; y++);//this is here to let all threads catch up and die off, not sure if it's needed or not
+
+
 
     return 0;
 }
